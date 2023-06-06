@@ -7,10 +7,10 @@ from sqlalchemy import CheckConstraint
 
 
 
-ntp_client = ntplib.NTPClient()
-ntp_server = 'ph.pool.ntp.org'
-response = ntp_client.request(ntp_server)
-ntp_time = datetime.fromtimestamp(response.tx_time)
+# ntp_client = ntplib.NTPClient()
+# ntp_server = 'ph.pool.ntp.org'
+# response = ntp_client.request(ntp_server)
+# ntp_time = datetime.fromtimestamp(response.tx_time)
 
 # MODELS for COLUMNS in DATABASE (MySQL)
 
@@ -144,7 +144,7 @@ class AuditTrail(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     event_type = db.Column(db.String(50))
     event_description = db.Column(db.String(255))
-    timestamp = db.Column(db.DateTime, default=ntp_time)
+    timestamp = db.Column(db.DateTime, default=datetime.now)
     user = db.relationship('User', backref=db.backref('audit_trail_entries', lazy=True))
 
     def __repr__(self):
